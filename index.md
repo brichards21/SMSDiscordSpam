@@ -143,6 +143,67 @@ spoofing, I compiled my Discord direct messaging history being myself
 and my younger sister, including the suspicious spam message that her
 account had sent me back in June of 2022.
 
+Note that all but one of the 686 Discord messages that my sister sent me
+are not spam. Only one message (pictured above) is certified spam. My
+goal is to see if I can characterize and quantify my sister’s Discord
+messaging behaviors, to see if that spam message stands out as
+quantitatively irregular from the pattern that her other messages
+exhibit.
+
+In order to assess quantitative differences, we will quantify my
+sister’s messages as a whole entity rather than word for word, though
+this may be of interest for future analysis.
+
+In this dataset of messages sent from my sister’s account, we retain
+information on author ID (which is the same throughout the dataset and
+appears as extra confirmation that these messages are indeed all sent
+from the same account), author (the name of my sister’s account),
+content (the message sent itself), a variable to indicate a message as
+spam or not (a value of 1 is spam and 0 is not-spam; only one message
+has a value of 1), and 8 other quantitative measures which we will go
+through in the subsequent sections.
+
+    ##              content spam word_count char_count avg_word stopwords hastags
+    ## 1             helllo    0          1          6      6.0         0       0
+    ## 2                 si    0          1          2      2.0         0       0
+    ## 3  got dunkin’ donut    0          4         21      4.5         0       0
+    ## 4             glazed    0          1          6      6.0         0       0
+    ## 5 think that’s spell    0          8         35      3.5         3       0
+    ##   numerics upper sentiment
+    ## 1        0     1         0
+    ## 2        0     0         0
+    ## 3        0     0         0
+    ## 4        0     0         0
+    ## 5        0     1         0
+
+All data collection, basic feature selection, pre-processing, and
+advanced text processing were performed using the pandas, NumPy, NLTK,
+TextBlob, and scikit-learn libraries in Python v. 3.8.13.
+
+# Data Prep and Preprocessing
+
+## Number of Words
+
+We start with something fairly simple: extracting the number of words in
+each message. The basic idea behind this is that if we have a messenger
+that often send messages in fragments (like sending new ideas in
+separate messages) or the opposite, often sends their messages in
+lengthier paragraphs, suddenly straying away from an established pattern
+like that could raise a red flag for concern. Additionally,
+
+    ##       authorid       author               date            content spam
+    ## 1 6.558673e+17 bananaabread 08/24/2021 6:47 PM             helllo    0
+    ## 2 6.558673e+17 bananaabread 08/24/2021 6:47 PM                 si    0
+    ## 3 6.558673e+17 bananaabread 08/24/2021 6:48 PM  got dunkin’ donut    0
+    ## 4 6.558673e+17 bananaabread 08/24/2021 6:48 PM             glazed    0
+    ## 5 6.558673e+17 bananaabread 08/24/2021 6:48 PM think that’s spell    0
+    ##   word_count char_count avg_word stopwords hastags numerics upper sentiment
+    ## 1          1          6      6.0         0       0        0     1         0
+    ## 2          1          2      2.0         0       0        0     0         0
+    ## 3          4         21      4.5         0       0        0     0         0
+    ## 4          1          6      6.0         0       0        0     0         0
+    ## 5          8         35      3.5         3       0        0     1         0
+
 # Don’t Fall Into a Spam Trap
 
 Here are some tips that you can apply the next time you get a suspicious
@@ -172,6 +233,10 @@ messages have to be (word or character count)?
 
 How irregular from a person’s messaging pattern would a message have to
 be in order to be marked by spam?
+
+What can the individual words used in these spam messages reveal about
+their spam status and how are the different from the words used in
+non-spam messages, if at all?
 
 Do these insights hold up when compared to the spoofing behaviors that
 other Discord users have seen in their direct messages?
