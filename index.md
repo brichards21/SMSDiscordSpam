@@ -107,9 +107,8 @@ Around June 2022, I noticed a significant uptick of spam on
 designed for communities, primarily focused on real-time voice, video,
 and text chat. I noticed spam in the Discord servers that I frequent as
 well as in my direct messages. Although most of these direct message
-spam messages came from users I had never interacted with before,
-imagine my surprise when my sister had suddenly sent me a suspicious
-message.
+spam came from users I had never interacted with before, imagine my
+surprise when my *sister* had suddenly sent me a suspicious message.
 
 This message had felt off from the moment I laid eyes on it. Not only
 was the content of the message falsely accusatory, but it simply didn’t
@@ -127,21 +126,21 @@ questions.
 
 # Research Questions
 
-How can we better detect spam messages when the sender uses spoofing
-like this? Can we quantify and characterize the texting behavior of a
-trusted source, thus creating a foundation for recognizing when a
-message breaks that behavior?
+-   How can we better detect spam messages when the sender uses spoofing
+    like this? Can we quantify and characterize the texting behavior of
+    a trusted source, thus creating a foundation for recognizing when a
+    message breaks that behavior?
 
-What kind of cues can help us determine when a trusted source suddenly
-sends an suspicious, potentially harmful message?
+-   What kind of cues can help us determine when a trusted source
+    suddenly sends an suspicious, potentially harmful message?
 
-Is there a way to define the irregularity of a message based on the past
-behaviors exhibited in a sender’s texting behavior?
+-   Is there a way to define the irregularity of a message based on the
+    past behaviors exhibited in a sender’s texting behavior?
 
 # Discord Spam Case Study
 
 As a brief preliminary case study into spam detection in the presence of
-spoofing, I compiled my Discord direct messaging history being myself
+spoofing, I compiled my Discord direct messaging history between myself
 and my younger sister, including the suspicious spam message that her
 account had sent me back in June of 2022.
 
@@ -153,7 +152,7 @@ quantitatively irregular from the pattern that her other messages
 exhibit.
 
 See the first five rows of our data below (excluding author ID and
-author name).
+author name for privacy constraints).
 
 In order to assess quantitative differences, we will quantify my
 sister’s messages as a whole entity rather than word for word, though
@@ -191,7 +190,7 @@ TextBlob, and scikit-learn libraries in Python v. 3.8.13.
 ## Number of Words
 
 We start with something fairly simple: extracting the number of words in
-each message. The basic idea behind this is that if we have a messenger
+each message. The basic idea behind this is that if we have a sender
 that often send messages in fragments (like sending new ideas in
 separate messages) or the opposite, often sends their messages in
 lengthier paragraphs, suddenly straying away from an established pattern
@@ -214,7 +213,7 @@ the source the messenger is claiming to be.
 
 Similarly, we can look at number of characters in each message to detect
 irregularity. Note that the calculation of number of characters also
-includes number of spaces which generally can be removed if desire. But
+includes number of spaces which generally can be removed if desired. But
 for our purposes, we retain information on number of spaces as well.
 
 ![](index_files/figure-markdown_strict/unnamed-chunk-4-1.png)
@@ -233,17 +232,17 @@ length of each message.
 ![](index_files/figure-markdown_strict/unnamed-chunk-5-1.png)
 
 When it comes to average word length, our spam message doesn’t
-particularly stand out. Instead, it’s buried among the non-spam messages
-and doesn’t stand out as irregular in our case.
+particularly stand out. Instead, it seems typical among the non-spam
+messages.
 
 ## Proportion of Stopwords
 
 When solving a natural language processing (NLP) process, the first
 thing that we generally do is remove the stop words. However, before we
-loose this information, calculating the number of stop words can also
+loose this information, calculating the *number* of stop words can also
 lend us some extra information.
 
-For reference, a stop word is a commonly used word that carry very
+For reference, a stop word is a commonly used word that carries very
 little useful information. Examples of stop words are “a”, “the”, “is”,
 “are”, etc.
 
@@ -255,16 +254,17 @@ relativity between our messages.
 ![](index_files/figure-markdown_strict/unnamed-chunk-6-1.png)
 
 Interestingly enough, we observe that about half of the words in the
-spam message are stop words. This ratio is a bit higher than the ratios
-seen in the majority of messages, though not the highest ratio observed.
-However, we’ll do well to note that the more content a message has, the
-more stop words we expect to be in that message in order to separate and
-properly tie in the more informative words. So, this association makes
-sense based on what we’ve observed.
+spam message are stop words. This ratio of stop word to overall word
+count is a bit higher than the ratios observed in the majority of
+messages, though not the highest ratio observed. However, we’ll do well
+to note that the more content a message has, the more stop words we
+expect to be in that message in order to separate and properly relate
+the more informative words. So, this association makes sense based on
+what we’ve observed.
 
 ## Proportion of Special Characters
 
-Another interesting featured that we extracted from the messages is the
+Another interesting feature that we extracted from the messages is the
 proportion of hashtags or mentions (‘\#’) present in it.
 
 ![](index_files/figure-markdown_strict/unnamed-chunk-7-1.png)
@@ -282,7 +282,7 @@ proportion of numerics present in each message.
 
 ![](index_files/figure-markdown_strict/unnamed-chunk-8-1.png)
 
-In the case of my messaging history with my sister, the number of
+In the case of my messaging history with my sister, the proportion of
 numerics in a single message maxes out at over 0.3, with most messages
 having a proportion of 0. The spam message also has zero numerics, so
 the proportion of numerics isn’t a strong signal in this case.
@@ -297,7 +297,7 @@ sent with just a little more ‘oomph’.
 
 The top insight here is that my sister frequently sends messages with a
 lot of uppercase words - some with even ALL uppercase. However, she
-seems to send just as much messages with no uppercase words at all.
+seems to send nearly as much messages with no uppercase words at all.
 Being that no uppercase words were found in the spam message, this
 feature isn’t helpful to us in this case.
 
@@ -329,7 +329,7 @@ the message belongs to the minority class of negative sentiments.
 
 In the case of my messaging history with my sister, word count,
 character count, proportion of special characters (#), and more weakly,
-proportion of stop words and text sentiment were signals that
+proportion of stop words and text sentiment, were signals that
 demonstrated irregular behavior from the behavior that my sister usually
 exhibits when messaging me on Discord.
 
@@ -342,16 +342,16 @@ potentially harmful attack!
 
 Let’s say we don’t have data or the time/resources to do a whole
 analysis on our text data to determine whether or not a trusted source
-is being spoofed? We can all be detectors of spam by starting with a
-view simple questions.
+is being spoofed. What do we do then? Well, we can all easily be
+detectors of spam by asking ourselves a view simple questions.
 
 ## Don’t Fall Into a Spam Trap: Stop. Breathe. Think!
 
-Here are some basic tips that you can apply the next time you get a
-suspicious message from a trusted source to prevent being a victim of
+Here are some basic tips that *you* can apply the next time you get a
+suspicious message from a trusted source to prevent being a victim of a
 spam or malicious scam attack. In a Nutshell: Think Before You Act!
 
--   Stop. Breathe. Think. Is there any merit to the claims that this
+-   **Stop. Breathe. Think.** Is there any merit to the claims that this
     trusted source is supposedly making out-of-the-blue?
 
 -   Is the nature of the message suspiciously passive aggressive or
@@ -368,7 +368,7 @@ spam or malicious scam attack. In a Nutshell: Think Before You Act!
 
 Oftentimes, these types of messages will try to taken advantage of the
 victim by fear mongering them and/or accusing them of something heinous,
-threatening the victims social status or reputation if the victim
+threatening the victim’s social status or reputation if the victim
 doesn’t act quickly. It’s important to realize when a spammer is trying
 to manipulate the vulnerability of a victim.
 
@@ -394,11 +394,11 @@ questions:
     these messages have to be (word or character count)?
 
 -   How irregular from a person’s messaging pattern would a message have
-    to be in order to be marked by spam?
+    to be in order to confidently be marked as spam?
 
 -   What can the individual words used in these spam messages reveal
-    about their spam status and how are the different from the words
-    used in non-spam messages, if at all?
+    about their spam status and how different are the words used in
+    non-spam messages, if they are different at all?
 
 -   Do these insights hold up when compared to the spoofing behaviors
     that other Discord users have seen in their direct messages?
