@@ -2,6 +2,8 @@
 
 # What is Spam?
 
+![](./img/micheal_scott.gif)
+
 In our interconnected world, where communication is predominantly
 facilitated through digital platforms, the prevalence of spam has become
 an all-too-familiar nuisance. From inundating email inboxes with
@@ -52,6 +54,8 @@ combat it, we can empower ourselves to navigate the digital landscape
 with greater resilience and safeguard our digital interactions.
 
 # Spammers and Scammers in Disguise - Spoofing
+
+![](./img/sms_spoofing.jpg)
 
 Now that we’ve got our spam-fighting gear on, let’s dive into one of the
 sneakiest moves spammers pull off — spoofing! It’s like their secret
@@ -150,31 +154,35 @@ messaging behaviors, to see if that spam message stands out as
 quantitatively irregular from the pattern that her other messages
 exhibit.
 
+See the first five rows of our data below (excluding author ID and
+author name).
+
 In order to assess quantitative differences, we will quantify my
 sister’s messages as a whole entity rather than word for word, though
 this may be of interest for future analysis.
 
 In this dataset of messages sent from my sister’s account, we retain
-information on author ID (which is the same throughout the dataset and
-appears as extra confirmation that these messages are indeed all sent
-from the same account), author (the name of my sister’s account),
-content (the message sent itself), a variable to indicate a message as
-spam or not (a value of 1 is spam and 0 is not-spam; only one message
-has a value of 1), and 8 other quantitative measures which we will go
-through in the subsequent sections.
+information on observation\_id (a unique identifier for each message),
+author ID (which is the same throughout the dataset and appears as extra
+confirmation that these messages are indeed all sent from the same
+account), author (the name of my sister’s account), content (the message
+sent itself), a variable to indicate a message as spam or not (a value
+of 1 is spam and 0 is not-spam; only one message has a value of 1), and
+8 other quantitative measures which we will go through in the subsequent
+sections.
 
-    ##              content spam word_count char_count avg_word stopwords hastags
-    ## 1             helllo    0          1          6      6.0         0       0
-    ## 2                 si    0          1          2      2.0         0       0
-    ## 3  got dunkin’ donut    0          4         21      4.5         0       0
-    ## 4             glazed    0          1          6      6.0         0       0
-    ## 5 think that’s spell    0          8         35      3.5         3       0
-    ##   numerics upper sentiment
-    ## 1        0     1         0
-    ## 2        0     0         0
-    ## 3        0     0         0
-    ## 4        0     0         0
-    ## 5        0     1         0
+    ##                 date            content spam word_count char_count avg_word
+    ## 1 08/24/2021 6:47 PM             helllo    0          1          6      6.0
+    ## 2 08/24/2021 6:47 PM                 si    0          1          2      2.0
+    ## 3 08/24/2021 6:48 PM  got dunkin’ donut    0          4         21      4.5
+    ## 4 08/24/2021 6:48 PM             glazed    0          1          6      6.0
+    ## 5 08/24/2021 6:48 PM think that’s spell    0          8         35      3.5
+    ##   stopwords hastags numerics upper sentiment
+    ## 1         0       0        0     1         0
+    ## 2         0       0        0     0         0
+    ## 3         0       0        0     0         0
+    ## 4         0       0        0     0         0
+    ## 5         3       0        0     1         0
 
 All data collection, basic feature selection, pre-processing, and
 advanced text processing were performed using the pandas, NumPy, NLTK,
@@ -189,26 +197,159 @@ each message. The basic idea behind this is that if we have a messenger
 that often send messages in fragments (like sending new ideas in
 separate messages) or the opposite, often sends their messages in
 lengthier paragraphs, suddenly straying away from an established pattern
-like that could raise a red flag for concern. Additionally,
+like that could raise a red flag for concern. Additionally, generally
+negative sentiments contain a lesser amount of words than the positive
+ones - the spam message sent from my sister’s account being particularly
+negative in nature.
 
-    ##       authorid       author               date            content spam
-    ## 1 6.558673e+17 bananaabread 08/24/2021 6:47 PM             helllo    0
-    ## 2 6.558673e+17 bananaabread 08/24/2021 6:47 PM                 si    0
-    ## 3 6.558673e+17 bananaabread 08/24/2021 6:48 PM  got dunkin’ donut    0
-    ## 4 6.558673e+17 bananaabread 08/24/2021 6:48 PM             glazed    0
-    ## 5 6.558673e+17 bananaabread 08/24/2021 6:48 PM think that’s spell    0
-    ##   word_count char_count avg_word stopwords hastags numerics upper sentiment
-    ## 1          1          6      6.0         0       0        0     1         0
-    ## 2          1          2      2.0         0       0        0     0         0
-    ## 3          4         21      4.5         0       0        0     0         0
-    ## 4          1          6      6.0         0       0        0     0         0
-    ## 5          8         35      3.5         3       0        0     1         0
+![](index_files/figure-markdown_strict/unnamed-chunk-3-1.png)
 
-# Don’t Fall Into a Spam Trap
+Right off the bat we see something very interesting. It seems that my
+sister is the type to send short-formed message or to send her messages
+in separate pieces. The spam message, marked above by the blue point on
+the scatterplot has a noticeably higher word count than any other single
+message that my sister has sent me. This is interesting and is our first
+indication that a message is irregular and may not actually be sent by
+the source the messenger is claiming to be.
 
-Here are some tips that you can apply the next time you get a suspicious
-message from a trusted source to prevent being a victim of spam or
-malicious scam attack. In a Nutshell: Think Before You Act!
+## Number of Characters
+
+Similarly, we can look at number of characters in each message to detect
+irregularity. Note that the calculation of number of characters also
+includes number of spaces which generally can be removed if desire. But
+for our purposes, we retain information on number of spaces as well.
+
+![](index_files/figure-markdown_strict/unnamed-chunk-4-1.png)
+
+Although it’s not always guaranteed that we’d see similar results when
+we compare word count and character count, in our case, we do see the
+same takeaway that the number of characters in the spam message is
+suspiciously higher than the character count of messages that my sister
+usually sends me.
+
+## Average Word Length
+
+We also extracted another feature which calculates the average word
+length of each message.
+
+![](index_files/figure-markdown_strict/unnamed-chunk-5-1.png)
+
+When it comes to average word length, our spam message doesn’t
+particularly stand out. Instead, it’s buried among the non-spam messages
+and doesn’t stand out as irregular in our case.
+
+## Proportion of stopwords
+
+When solving a natural language processing (NLP) process, the first
+thing that we generally do is remove the stop words. However, before we
+loose this information, calculating the number of stop words can also
+lend us some extra information.
+
+For reference, a stop word is a commonly used word that carry very
+little useful information. Examples of stop words are “a”, “the”, “is”,
+“are”, etc.
+
+We imported stopwords from the NLTK, an NLP library in Python. For
+subsequent metrics, we will look at ratios with number of words in the
+message as a consistent denominator in order to get a better metric of
+relativity between our messages.
+
+![](index_files/figure-markdown_strict/unnamed-chunk-6-1.png)
+
+Interestingly enough, we observe that about half of the words in the
+spam message are stop words. This ratio is a bit higher than the ratios
+seen in the majority of messages, though not the highest ratio observed.
+However, we’ll do well to note that the more content a message has, the
+more stop words we expect to be in that message in order to separate and
+properly tie in the more informative words. So, this association makes
+sense based on what we’ve observed.
+
+## Proportion of special characters
+
+Another interesting featured that we extracted from the messages is the
+proportion of hashtags or mentions (‘\#’) present in it.
+
+![](index_files/figure-markdown_strict/unnamed-chunk-7-1.png)
+
+Excluding the use of the ‘\#’ character for links or attachments, we see
+that the spam message is the only time that I was sent a message from my
+sister’s Discord account where a tag or mention was included. Clearly,
+this is not behavior that my sister normally exhibits in her text so
+it’s unusual that this special character suddenly appeared in a message.
+
+## Proportion of Numerics
+
+Like we calculated the number of words, we also calculated the
+proportion of numerics present in each message.
+
+![](index_files/figure-markdown_strict/unnamed-chunk-8-1.png)
+
+In the case of my messaging history with my sister, the number of
+numerics in a single message maxes out at over 0.3, with most messages
+having a proportion of 0. The spam message also has zero numerics, so
+the proportion of numerics isn’t a strong signal in this case.
+
+## Proportion of Uppercase Words
+
+Anger, rage, or passion is quite often expressed by writing in UPPERCASE
+words which makes this a necessary operation to identify those words
+sent with just a little more ‘umph’.
+
+![](index_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+
+The top insight here is that my sister frequently sends messages with a
+lot of uppercase words - some with even ALL uppercase. However, she
+seems to send just as much messages with no uppercase words at all.
+Being that no uppercase words were found in the spam message, this
+feature isn’t helpful to us in this case.
+
+## Sentiment Analysis
+
+Sentiment analysis is described as the process of computationally
+identifying and categorizing opinions expressed in a piece of text
+especially in order to determine whether the writer’s attitude towards a
+topic is positive, negative, or neutral.
+
+We can extract the polarity of these messages which indicates the
+sentiment. These values range from -1 to 1. A value nearer to 1 means a
+positive sentiment and values nearer to -1 means a negative sentiment.
+
+![](index_files/figure-markdown_strict/unnamed-chunk-10-1.png)
+
+Notably, the spam message exhibits a more negative sentiment. What’s to
+note here is that my sister sends messages with both positive and
+negative sentiment, though the majority of messages (85.6%) that she
+sends are deemed as neutral (polarity = 0). 10.3% of messages sent lean
+positive, and the remaining 4.1% lean negative (the spam message being
+one of them). Though the negative sentiment of the spam message doesn’t
+particularly stand out in quality and quantity, it may raise a flag that
+the message belongs to the minority class of negative sentiments.
+
+# What’s the So What?
+
+In the case of my messaging history with my sister, word count,
+character count, proportion of special characters (#), and more weakly,
+proportion of stopwords and text sentiment were signals that
+demonstrated irregular behavior from the behavior that my sister usually
+exhibits when messaging me on Discord.
+
+So, it seems that we may be able to use even basic text characterization
+features to identify irregular SMS behavior. The complex issue is
+identifying spam when it seems to be coming from a trusted source. It’s
+important that we’re able to develop some metrics, either basic or
+advanced, to hoist those red flags in our mind before falling prey to a
+potentially harmful attack!
+
+Let’s say we don’t have data or the time/resources to do a whole
+analysis on our text data to determine whether or not a trusted source
+is being spoofed? We can all be detectors of spam by starting with a
+view simple questions.
+
+## Don’t Fall Into a Spam Trap: Stop. Breathe. Think!
+
+Here are some basic tips that you can apply the next time you get a
+suspicious message from a trusted source to prevent being a victim of
+spam or malicious scam attack. In a Nutshell: Think Before You Act!
 
 -   Stop. Breathe. Think. Is there any merit to the claims that this
     trusted source is supposedly making out-of-the-blue?
@@ -225,18 +366,47 @@ malicious scam attack. In a Nutshell: Think Before You Act!
     of the public server or channel that they seem to be inviting you to
     before accepting the invitation to confirm it’s legitimate.
 
-# More Questions to Think About for Future Analysis
+Oftentimes, these types of messages will try to taken advantage of the
+victim by fear mongering them and/or accusing them of something heinous,
+threatening the victims social status or reputation if the victim
+doesn’t act quickly. It’s important to realize when a spammer is trying
+to manipulate the vulnerability of a victim.
 
-How many messages would you need to exchange for it to be enough to
-define the messaging behaviors of an individual? How long would these
-messages have to be (word or character count)?
+These malicious actors try to get the victim flustered and frantic with
+false claims about slander being spread about them online, or their
+finances and other sensitive information being under immediate threat.
+Young children and the platforms that young people often frequent like
+Discord are often targets of particular interest due to younger
+individuals generally being more gullible and susceptible to cyber
+threats.
 
-How irregular from a person’s messaging pattern would a message have to
-be in order to be marked by spam?
+This is why it’s always important to stop, breathe, and think. Take the
+precautionary actions recommended above before responding to a message
+like this before the damage done is irreversible.
 
-What can the individual words used in these spam messages reveal about
-their spam status and how are the different from the words used in
-non-spam messages, if at all?
+# Next Steps - More Questions to Think About for Future Analysis
 
-Do these insights hold up when compared to the spoofing behaviors that
-other Discord users have seen in their direct messages?
+Moving forward for future analysis, we can think about the following
+questions:
+
+-   How many messages would you need to exchange for it to be enough to
+    define the messaging behaviors of an individual? How long would
+    these messages have to be (word or character count)?
+
+-   How irregular from a person’s messaging pattern would a message have
+    to be in order to be marked by spam?
+
+-   What can the individual words used in these spam messages reveal
+    about their spam status and how are the different from the words
+    used in non-spam messages, if at all?
+
+-   Do these insights hold up when compared to the spoofing behaviors
+    that other Discord users have seen in their direct messages?
+
+-   If we were to look closely into the words contained within each
+    message, what metrics would be best considered there? Term
+    frequency - inverse document frequency may be an analysis of
+    interest.
+
+Let’s continue to develop the field of anti-spam and fight against
+vectors of abuse including the complex problem space of spoofing!
