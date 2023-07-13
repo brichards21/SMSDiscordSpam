@@ -1,5 +1,3 @@
-![](./img/spy-family.gif)
-
 # What is Spam?
 
 ![](./img/micheal_scott.gif)
@@ -101,7 +99,7 @@ email addresses, or messages that demand immediate action. And, of
 course, always double-check the legitimacy of messages before sharing
 personal info or clicking on suspicious links.
 
-So, how do we unmask these digital imposters and keep our inboxes safe
+So, how do we unmask these digital impostors and keep our inboxes safe
 and sound? In this post, I’ll examine a personal case study of mine.
 
 Around June 2022, I noticed a significant uptick of spam on
@@ -238,7 +236,7 @@ When it comes to average word length, our spam message doesn’t
 particularly stand out. Instead, it’s buried among the non-spam messages
 and doesn’t stand out as irregular in our case.
 
-## Proportion of stopwords
+## Proportion of Stopwords
 
 When solving a natural language processing (NLP) process, the first
 thing that we generally do is remove the stop words. However, before we
@@ -249,7 +247,7 @@ For reference, a stop word is a commonly used word that carry very
 little useful information. Examples of stop words are “a”, “the”, “is”,
 “are”, etc.
 
-We imported stopwords from the NLTK, an NLP library in Python. For
+We imported stop words from the NLTK, an NLP library in Python. For
 subsequent metrics, we will look at ratios with number of words in the
 message as a consistent denominator in order to get a better metric of
 relativity between our messages.
@@ -264,7 +262,7 @@ more stop words we expect to be in that message in order to separate and
 properly tie in the more informative words. So, this association makes
 sense based on what we’ve observed.
 
-## Proportion of special characters
+## Proportion of Special Characters
 
 Another interesting featured that we extracted from the messages is the
 proportion of hashtags or mentions (‘\#’) present in it.
@@ -293,7 +291,7 @@ the proportion of numerics isn’t a strong signal in this case.
 
 Anger, rage, or passion is quite often expressed by writing in UPPERCASE
 words which makes this a necessary operation to identify those words
-sent with just a little more ‘umph’.
+sent with just a little more ‘oomph’.
 
 ![](index_files/figure-markdown_strict/unnamed-chunk-9-1.png)
 
@@ -327,9 +325,11 @@ the message belongs to the minority class of negative sentiments.
 
 # What’s the So What?
 
+![](./img/kevin.gif)
+
 In the case of my messaging history with my sister, word count,
 character count, proportion of special characters (#), and more weakly,
-proportion of stopwords and text sentiment were signals that
+proportion of stop words and text sentiment were signals that
 demonstrated irregular behavior from the behavior that my sister usually
 exhibits when messaging me on Discord.
 

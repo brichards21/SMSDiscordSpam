@@ -36,7 +36,7 @@ library(ggforce)
 ```
 
 
-![](./img/spy-family.gif)
+
 
 
 # What is Spam?
@@ -73,7 +73,7 @@ On top of that, authorities and cybersecurity organizations are joining forces t
 
 But remember, the most powerful weapon in this war against spoofing is knowledge. Stay alert and educate yourself about the sneaky tactics spammers employ. Look out for red flags like generic greetings, odd email addresses, or messages that demand immediate action. And, of course, always double-check the legitimacy of messages before sharing personal info or clicking on suspicious links.
 
-So, how do we unmask these digital imposters and keep our inboxes safe and sound? In this post, I'll examine a personal case study of mine. 
+So, how do we unmask these digital impostors and keep our inboxes safe and sound? In this post, I'll examine a personal case study of mine. 
 
 Around June 2022, I noticed a significant uptick of spam on [Discord](https://discord.com/), a popular communication platform designed for communities, primarily focused on real-time voice, video, and text chat. I noticed spam in the Discord servers that I frequent as well as in my direct messages. Although most of these direct message spam messages came from users I had never interacted with before, imagine my surprise when my sister had suddenly sent me a suspicious message. 
 
@@ -179,13 +179,13 @@ ggplot(data = sister_df, aes(x = observation_id, y = avg_word, col = as.factor(s
 
 When it comes to average word length, our spam message doesn't particularly stand out. Instead, it's buried among the non-spam messages and doesn't stand out as irregular in our case. 
 
-## Proportion of stopwords
+## Proportion of Stopwords
 
 When solving a natural language processing (NLP) process, the first thing that we generally do is remove the stop words. However, before we loose this information, calculating the number of stop words can also lend us some extra information. 
 
 For reference, a stop word is a commonly used word that carry very little useful information. Examples of stop words are "a", "the", "is", "are", etc.
 
-We imported stopwords from the NLTK, an NLP library in Python. For subsequent metrics, we will look at ratios with number of words in the message as a consistent denominator in order to get a better metric of relativity between our messages.
+We imported stop words from the NLTK, an NLP library in Python. For subsequent metrics, we will look at ratios with number of words in the message as a consistent denominator in order to get a better metric of relativity between our messages.
 
 ```{r}
 
@@ -200,7 +200,7 @@ ggplot(data = sister_df, aes(x = observation_id, y = stopwords/word_count, col =
 
 Interestingly enough, we observe that about half of the words in the spam message are stop words. This ratio is a bit higher than the ratios seen in the majority of messages, though not the highest ratio observed. However, we'll do well to note that the more content a message has, the more stop words we expect to be in that message in order to separate and properly tie in the more informative words. So, this association makes sense based on what we've observed.
 
-## Proportion of special characters
+## Proportion of Special Characters
 
 Another interesting featured that we extracted from the messages is the proportion of hashtags or mentions ('#') present in it. 
 
@@ -233,7 +233,7 @@ In the case of my messaging history with my sister, the number of numerics in a 
 
 ## Proportion of Uppercase Words
 
-Anger, rage, or passion is quite often expressed by writing in UPPERCASE words which makes this a necessary operation to identify those words sent with just a little more 'umph'. 
+Anger, rage, or passion is quite often expressed by writing in UPPERCASE words which makes this a necessary operation to identify those words sent with just a little more 'oomph'. 
 
 ```{r}
 
@@ -283,7 +283,9 @@ Notably, the spam message exhibits a more negative sentiment. What's to note her
 
 # What's the So What?
 
-In the case of my messaging history with my sister, word count, character count, proportion of special characters (#), and more weakly, proportion of stopwords and text sentiment were signals that demonstrated irregular behavior from the behavior that my sister usually exhibits when messaging me on Discord. 
+![](./img/kevin.gif)
+
+In the case of my messaging history with my sister, word count, character count, proportion of special characters (#), and more weakly, proportion of stop words and text sentiment were signals that demonstrated irregular behavior from the behavior that my sister usually exhibits when messaging me on Discord. 
 
 So, it seems that we may be able to use even basic text characterization features to identify irregular SMS behavior. The complex issue is identifying spam when it seems to be coming from a trusted source. It's important that we're able to develop some metrics, either basic or advanced, to hoist those red flags in our mind before falling prey to a potentially harmful attack! 
 
